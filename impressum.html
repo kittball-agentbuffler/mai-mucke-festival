@@ -14,77 +14,238 @@
             --white: #FAFAFA;
             --gray: #888888;
         }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
         body {
             background: var(--black);
             color: var(--white);
             font-family: 'Inter', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
         }
+
+        /* ── NAV ── */
         nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.2rem 2rem;
-            background: rgba(10,10,10,0.95);
+            padding: 1rem 1.5rem;
+            background: rgba(10,10,10,0.85);
+            backdrop-filter: blur(12px);
             border-bottom: 1px solid #1a1a1a;
         }
         .logo {
             font-family: 'Anton', sans-serif;
-            font-size: 1.4rem;
-            letter-spacing: 0.1em;
+            font-size: 1.5rem;
+            letter-spacing: 0.08em;
             color: var(--yellow);
             text-decoration: none;
         }
         .back {
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             color: var(--gray);
             text-decoration: none;
+            letter-spacing: 0.05em;
         }
         .back:hover { color: var(--yellow); }
-        main {
-            max-width: 680px;
-            margin: 4rem auto;
-            padding: 0 1.5rem;
-            flex: 1;
+
+        /* ── HERO COLLAGE ── */
+        .hero {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 3px;
         }
-        h1 {
+
+        .hero-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: brightness(0.65) saturate(1.1);
+            transition: filter 0.4s ease;
+        }
+        .hero-img:hover {
+            filter: brightness(0.85) saturate(1.3);
+        }
+
+        /* Large left image spans 2 rows */
+        .hero .img-main {
+            grid-column: 1;
+            grid-row: 1 / 3;
+        }
+
+        /* Top right */
+        .hero .img-tr {
+            grid-column: 2;
+            grid-row: 1;
+        }
+
+        /* Middle right */
+        .hero .img-mr {
+            grid-column: 3;
+            grid-row: 1;
+        }
+
+        /* Bottom right spanning 2 cols */
+        .hero .img-bl {
+            grid-column: 2;
+            grid-row: 2;
+        }
+        .hero .img-br {
+            grid-column: 3;
+            grid-row: 2;
+        }
+
+        /* EDGY text overlay on hero */
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            background: linear-gradient(
+                to bottom,
+                rgba(10,10,10,0.15) 0%,
+                rgba(10,10,10,0.05) 40%,
+                rgba(10,10,10,0.6) 100%
+            );
+        }
+
+        .hero-title {
             font-family: 'Anton', sans-serif;
-            font-size: 2.2rem;
-            letter-spacing: 0.05em;
+            font-size: clamp(5rem, 18vw, 16rem);
+            letter-spacing: -0.02em;
             color: var(--yellow);
-            margin-bottom: 2.5rem;
+            line-height: 0.85;
+            text-align: center;
+            text-shadow:
+                0 0 80px rgba(255,214,0,0.4),
+                0 4px 30px rgba(0,0,0,0.8);
+            mix-blend-mode: normal;
         }
-        h2 {
-            font-size: 0.75rem;
-            font-weight: 700;
+
+        .hero-sub {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(0.7rem, 2vw, 1.1rem);
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.7);
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        /* Scroll hint */
+        .scroll-hint {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.7rem;
             letter-spacing: 0.2em;
             text-transform: uppercase;
-            color: var(--gray);
-            margin-top: 2rem;
-            margin-bottom: 0.6rem;
+            animation: float 2s ease-in-out infinite;
+            pointer-events: none;
         }
+        .scroll-hint svg {
+            width: 24px;
+            height: 24px;
+            opacity: 0.6;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50%       { transform: translateX(-50%) translateY(6px); }
+        }
+
+        /* ── IMPRESSUM CONTENT ── */
+        #impressum {
+            max-width: 680px;
+            margin: 5rem auto;
+            padding: 0 1.5rem 5rem;
+        }
+
+        .section-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--yellow);
+            margin-bottom: 0.5rem;
+        }
+
+        h1 {
+            font-family: 'Anton', sans-serif;
+            font-size: 2.8rem;
+            letter-spacing: 0.05em;
+            color: var(--white);
+            margin-bottom: 3rem;
+        }
+
+        h2 {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-top: 2.5rem;
+            margin-bottom: 0.7rem;
+        }
+
         p, address {
             font-size: 1rem;
-            line-height: 1.7;
-            color: #ccc;
+            line-height: 1.8;
+            color: #bbb;
             font-style: normal;
         }
+
         a { color: var(--yellow); text-decoration: none; }
         a:hover { text-decoration: underline; }
+
         .divider {
             border: none;
             border-top: 1px solid #1e1e1e;
-            margin: 2rem 0;
+            margin: 2.5rem 0;
         }
+
         footer {
             text-align: center;
-            padding: 1.5rem;
-            font-size: 0.8rem;
-            color: #444;
+            padding: 2rem;
+            font-size: 0.75rem;
+            color: #333;
             border-top: 1px solid #1a1a1a;
+            letter-spacing: 0.1em;
+        }
+
+        /* Mobile */
+        @media (max-width: 600px) {
+            .hero {
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: 1fr 1fr 1fr;
+            }
+            .hero .img-main {
+                grid-column: 1 / 3;
+                grid-row: 1;
+            }
+            .hero .img-tr  { grid-column: 1; grid-row: 2; }
+            .hero .img-mr  { grid-column: 2; grid-row: 2; }
+            .hero .img-bl  { grid-column: 1; grid-row: 3; }
+            .hero .img-br  { grid-column: 2; grid-row: 3; }
         }
     </style>
 </head>
@@ -95,7 +256,30 @@
     <a href="/" class="back">← Festival</a>
 </nav>
 
-<main>
+<!-- HERO COLLAGE -->
+<section class="hero">
+    <img class="hero-img img-main" src="hero/poster1.jpg"   alt="Mai Mucke Festival">
+    <img class="hero-img img-tr"   src="hero/neon.jpg"      alt="Neon Festival">
+    <img class="hero-img img-mr"   src="hero/newcomer.jpg"  alt="Newcomer Contest">
+    <img class="hero-img img-bl"   src="hero/yellow.jpg"    alt="Festival Poster">
+    <img class="hero-img img-br"   src="hero/markt.jpg"     alt="Ohligser Markt">
+
+    <div class="hero-overlay">
+        <div class="hero-title">EDGY</div>
+        <div class="hero-sub">Kulturförderung Solingen</div>
+    </div>
+
+    <div class="scroll-hint">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 5v14M5 12l7 7 7-7"/>
+        </svg>
+        Impressum
+    </div>
+</section>
+
+<!-- IMPRESSUM -->
+<section id="impressum">
+    <p class="section-label">Rechtliches</p>
     <h1>IMPRESSUM</h1>
 
     <h2>Angaben gemäß § 5 TMG</h2>
@@ -122,17 +306,15 @@
     <hr class="divider">
 
     <h2>Haftungsausschluss</h2>
-    <p>Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich.</p>
+    <p>Die Inhalte dieser Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte nach den allgemeinen Gesetzen verantwortlich.</p>
 
     <hr class="divider">
 
     <h2>Urheberrecht</h2>
-    <p>Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechts bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.</p>
-</main>
+    <p>Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Vervielfältigung, Bearbeitung und Verbreitung bedürfen der schriftlichen Zustimmung des jeweiligen Autors.</p>
+</section>
 
-<footer>
-    © 2026 EDGY Kulturförderung · Solingen
-</footer>
+<footer>© 2026 EDGY Kulturförderung · Solingen</footer>
 
 </body>
 </html>
