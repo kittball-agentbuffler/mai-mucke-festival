@@ -10,15 +10,12 @@
         :root {
             --yellow: #FFD600;
             --black: #0A0A0A;
-            --dark: #111111;
             --white: #FAFAFA;
             --gray: #888888;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         html { scroll-behavior: smooth; }
-
         body {
             background: var(--black);
             color: var(--white);
@@ -28,8 +25,7 @@
         /* ── NAV ── */
         nav {
             position: fixed;
-            top: 0;
-            width: 100%;
+            top: 0; width: 100%;
             z-index: 100;
             display: flex;
             justify-content: space-between;
@@ -54,59 +50,50 @@
         }
         .back:hover { color: var(--yellow); }
 
-        /* ── HERO COLLAGE ── */
+        /* ── HERO: 3-column collage ── */
         .hero {
             position: relative;
             height: 100vh;
             width: 100%;
             overflow: hidden;
-            display: grid;
-            grid-template-columns: 1.2fr 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
+            display: flex;
             gap: 3px;
         }
 
+        .col {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            overflow: hidden;
+        }
+        .col-a { flex: 1.25; }
+        .col-b { flex: 1; }
+        .col-c { flex: 1.1; }
+
         .hero-img {
             width: 100%;
-            height: 100%;
             object-fit: cover;
             display: block;
-            filter: brightness(0.65) saturate(1.1);
-            transition: filter 0.4s ease;
+            filter: brightness(0.6) saturate(1.15);
+            transition: filter 0.35s ease;
+            flex: 1;
         }
-        .hero-img:hover {
-            filter: brightness(0.85) saturate(1.3);
-        }
+        .hero-img:hover { filter: brightness(0.85) saturate(1.3); }
 
-        /* Large left image spans 2 rows */
-        .hero .img-main {
-            grid-column: 1;
-            grid-row: 1 / 3;
-        }
+        /* Height variation within columns */
+        .col-a .hero-img:nth-child(1) { flex: 1.6; }
+        .col-a .hero-img:nth-child(2) { flex: 1; }
+        .col-a .hero-img:nth-child(3) { flex: 1.2; }
 
-        /* Top right */
-        .hero .img-tr {
-            grid-column: 2;
-            grid-row: 1;
-        }
+        .col-b .hero-img:nth-child(1) { flex: 1; }
+        .col-b .hero-img:nth-child(2) { flex: 1.4; }
+        .col-b .hero-img:nth-child(3) { flex: 0.9; }
 
-        /* Middle right */
-        .hero .img-mr {
-            grid-column: 3;
-            grid-row: 1;
-        }
+        .col-c .hero-img:nth-child(1) { flex: 1.1; }
+        .col-c .hero-img:nth-child(2) { flex: 1; }
+        .col-c .hero-img:nth-child(3) { flex: 1.3; }
 
-        /* Bottom right spanning 2 cols */
-        .hero .img-bl {
-            grid-column: 2;
-            grid-row: 2;
-        }
-        .hero .img-br {
-            grid-column: 3;
-            grid-row: 2;
-        }
-
-        /* EDGY text overlay on hero */
+        /* EDGY overlay */
         .hero-overlay {
             position: absolute;
             inset: 0;
@@ -117,36 +104,34 @@
             pointer-events: none;
             background: linear-gradient(
                 to bottom,
-                rgba(10,10,10,0.15) 0%,
-                rgba(10,10,10,0.05) 40%,
-                rgba(10,10,10,0.6) 100%
+                rgba(10,10,10,0.1) 0%,
+                rgba(10,10,10,0.0) 35%,
+                rgba(10,10,10,0.55) 100%
             );
         }
 
         .hero-title {
             font-family: 'Anton', sans-serif;
-            font-size: clamp(5rem, 18vw, 16rem);
+            font-size: clamp(6rem, 20vw, 18rem);
             letter-spacing: -0.02em;
             color: var(--yellow);
             line-height: 0.85;
             text-align: center;
             text-shadow:
-                0 0 80px rgba(255,214,0,0.4),
-                0 4px 30px rgba(0,0,0,0.8);
-            mix-blend-mode: normal;
+                0 0 100px rgba(255,214,0,0.5),
+                0 6px 40px rgba(0,0,0,0.9);
         }
 
         .hero-sub {
-            font-family: 'Inter', sans-serif;
-            font-size: clamp(0.7rem, 2vw, 1.1rem);
-            letter-spacing: 0.35em;
+            font-size: clamp(0.65rem, 1.8vw, 1rem);
+            letter-spacing: 0.4em;
             text-transform: uppercase;
-            color: rgba(255,255,255,0.7);
-            margin-top: 1rem;
+            color: rgba(255,255,255,0.65);
+            margin-top: 1.2rem;
             text-align: center;
         }
 
-        /* Scroll hint */
+        /* Scroll arrow */
         .scroll-hint {
             position: absolute;
             bottom: 2rem;
@@ -155,29 +140,25 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.5rem;
-            color: rgba(255,255,255,0.5);
-            font-size: 0.7rem;
-            letter-spacing: 0.2em;
+            gap: 0.4rem;
+            color: rgba(255,255,255,0.45);
+            font-size: 0.65rem;
+            letter-spacing: 0.22em;
             text-transform: uppercase;
-            animation: float 2s ease-in-out infinite;
+            animation: float 2.2s ease-in-out infinite;
             pointer-events: none;
         }
-        .scroll-hint svg {
-            width: 24px;
-            height: 24px;
-            opacity: 0.6;
-        }
+        .scroll-hint svg { width: 22px; height: 22px; }
         @keyframes float {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50%       { transform: translateX(-50%) translateY(6px); }
+            0%,100% { transform: translateX(-50%) translateY(0); }
+            50%      { transform: translateX(-50%) translateY(7px); }
         }
 
         /* ── IMPRESSUM CONTENT ── */
         #impressum {
             max-width: 680px;
             margin: 5rem auto;
-            padding: 0 1.5rem 5rem;
+            padding: 0 1.5rem 6rem;
         }
 
         .section-label {
@@ -232,20 +213,12 @@
             letter-spacing: 0.1em;
         }
 
-        /* Mobile */
+        /* Mobile: 2 columns, 5 images */
         @media (max-width: 600px) {
-            .hero {
-                grid-template-columns: 1fr 1fr;
-                grid-template-rows: 1fr 1fr 1fr;
-            }
-            .hero .img-main {
-                grid-column: 1 / 3;
-                grid-row: 1;
-            }
-            .hero .img-tr  { grid-column: 1; grid-row: 2; }
-            .hero .img-mr  { grid-column: 2; grid-row: 2; }
-            .hero .img-bl  { grid-column: 1; grid-row: 3; }
-            .hero .img-br  { grid-column: 2; grid-row: 3; }
+            .hero { gap: 2px; }
+            .col-c { display: none; }
+            .col-a { flex: 1; }
+            .col-b { flex: 1; }
         }
     </style>
 </head>
@@ -256,13 +229,29 @@
     <a href="/" class="back">← Festival</a>
 </nav>
 
-<!-- HERO COLLAGE -->
+<!-- 9-IMAGE COLLAGE HERO -->
 <section class="hero">
-    <img class="hero-img img-main" src="hero/poster1.jpg"   alt="Mai Mucke Festival">
-    <img class="hero-img img-tr"   src="hero/neon.jpg"      alt="Neon Festival">
-    <img class="hero-img img-mr"   src="hero/newcomer.jpg"  alt="Newcomer Contest">
-    <img class="hero-img img-bl"   src="hero/yellow.jpg"    alt="Festival Poster">
-    <img class="hero-img img-br"   src="hero/markt.jpg"     alt="Ohligser Markt">
+
+    <!-- Column A -->
+    <div class="col col-a">
+        <img class="hero-img" src="hero/poster1.jpg"    alt="">
+        <img class="hero-img" src="hero/blue_fuzzy.jpg" alt="">
+        <img class="hero-img" src="hero/markt.jpg"      alt="">
+    </div>
+
+    <!-- Column B -->
+    <div class="col col-b">
+        <img class="hero-img" src="hero/neon.jpg"        alt="">
+        <img class="hero-img" src="hero/jungle_neon.jpg" alt="">
+        <img class="hero-img" src="hero/newcomer.jpg"    alt="">
+    </div>
+
+    <!-- Column C -->
+    <div class="col col-c">
+        <img class="hero-img" src="hero/yellow.jpg"  alt="">
+        <img class="hero-img" src="hero/metal.jpg"   alt="">
+        <img class="hero-img" src="hero/markt2.jpg"  alt="">
+    </div>
 
     <div class="hero-overlay">
         <div class="hero-title">EDGY</div>
